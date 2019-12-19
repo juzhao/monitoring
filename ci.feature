@@ -10,7 +10,6 @@ Feature: Install and configuration related scenarios
 
     Given a pod becomes ready with labels:
       | app=grafana |
-    Then evaluation of `pod.name` is stored in the :pod_name clipboard
     When I run commands on the host:
       | oc -n openshift-monitoring get secret grafana-config -o jsonpath="{.data.grafana\.ini}" | base64 -d | grep cookie_secure |
     Then the step should succeed
