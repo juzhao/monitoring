@@ -24,10 +24,10 @@ Feature: Install and configuration related scenarios
     Given the master version >= "4.2"
     Given I switch to the first user
     And the first user is cluster-admin
+    And I use the "openshift-monitoring" project
 
-    When I run commands on the host:
-      | oc -n openshift-monitoring get ServiceMonitor |
-    Then the step should succeed
+    When I run the :get client command with:
+      | resource | ServiceMonitor |
     Then the output should not contain:
       | cluster-version-operator |
       | kube-apiserver |
