@@ -10,10 +10,13 @@ Feature: Install and configuration related scenarios
 
     Given a pod becomes ready with labels:
       | app=grafana |
-    When I execute on the pod:
-      | cat | /etc/grafana/grafana.ini |
+    When I run the :exec client command with:
+      | pod              | <%= pod.name %>          |
+      | c                | grafana                  |
+      | exec_command     | cat                      |
+      | exec_command_arg | /etc/grafana/grafana.ini |
     Then the output should contain:
-      | cookie_secure = true           |
+      | cookie_secure = true                        |
 
   # @author juzhao@redhat.com
   # @case_id OCP-23705
