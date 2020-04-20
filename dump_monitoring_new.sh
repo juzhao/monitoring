@@ -63,7 +63,7 @@ check_project_info() {
   echo -- Secrets
   oc -n $NAMESPACE describe secrets > $project_folder/secrets
 
-  resource_types=(configmaps daemonsets deployment services routes serviceaccounts statefulset persistentvolumeclaims pods)
+  resource_types=(configmaps daemonsets deployment services routes serviceaccounts statefulset persistentvolumeclaims pods prometheus prometheusrules alertmanagers servicemonitors)
   for resource_type in ${resource_types[@]}
   do
     echo -- Extracting $resource_type ...
