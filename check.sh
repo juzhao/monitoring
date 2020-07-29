@@ -12,6 +12,7 @@ funCheckPods() {
        echo "output pods under openshift-monitoring"
        oc -n $project get pod -o wide
 }
+
 # check monitoring images and check if errors in pod logs
 funCheckImageAndLog() {
 	for pod in $(oc get pod -n $project | grep -v NAME| awk '{print $1}')
