@@ -43,7 +43,7 @@ funCheckPrometheus(){
         echo -e "\n"
 }
 
-# Check alertmanager if alert contains DeadMansSwitch
+# Check alertmanager if alert contains Watchdog
 funCheckAlertmanager(){
         echo "Alertmanager pod IP is:" ${alertmanager_ip}
         echo "output alerts"
@@ -51,23 +51,27 @@ funCheckAlertmanager(){
         echo -e "\n"
 }
 
+# Check targets which are down
 funCheckTargetDown(){
         echo "prometheus route is:" ${prometheus_route}
         echo "the following target is down"
         curl -k -H "Authorization: Bearer $token" https://${prometheus_route}/targets | grep -i down
 }
 
+# Check targets which have x509 error
 funCheckx509(){
         echo "prometheus route is:" ${prometheus_route}
         echo "x509 error see below"
         curl -k -H "Authorization: Bearer $token" https://${prometheus_route}/targets | grep -i x509
 }
 
+# Check targets which are context deadline exceeded
 funCheckdeadline(){
         echo "prometheus route is:" ${prometheus_route}
         echo "context deadline exceeded error see below"
         curl -k -H "Authorization: Bearer $token" https://${prometheus_route}/targets | grep -i deadline
 }
+
 funCheckPods
 funCheckImageAndLog
 funCheckAlertmanager
