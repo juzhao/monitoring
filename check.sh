@@ -51,18 +51,21 @@ funCheckAlertmanager(){
         echo -e "\n"
 }
 
+# Check the down endpoints
 funCheckTargetDown(){
         echo "prometheus route is:" ${prometheus_route}
         echo "the following target is down"
         curl -k -H "Authorization: Bearer $token" https://${prometheus_route}/targets | grep -i down
 }
 
+# Check x509 endpoints
 funCheckx509(){
         echo "prometheus route is:" ${prometheus_route}
         echo "x509 error see below"
         curl -k -H "Authorization: Bearer $token" https://${prometheus_route}/targets | grep -i x509
 }
 
+# Check deadline exceeded endpoints
 funCheckdeadline(){
         echo "prometheus route is:" ${prometheus_route}
         echo "context deadline exceeded error see below"
