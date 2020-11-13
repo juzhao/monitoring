@@ -4,7 +4,7 @@ prometheus_ip=`oc -n $project get pod -l statefulset.kubernetes.io/pod-name=prom
 alertmanager_ip=`oc -n $project get pod -l statefulset.kubernetes.io/pod-name=alertmanager-main-0 -ojsonpath="{..podIP"}`
 grafana_ip=`oc -n $project get pod -l app=grafana -ojsonpath="{..podIP"}`
 token=`oc -n $project sa get-token prometheus-k8s`
-prometheus_route=`oc -n $project  get route | grep prometheus-k8s | awk '{print $2}'`
+prometheus_route=`oc -n $project get route | grep prometheus-k8s | awk '{print $2}'`
 
 
 # check monitoring pods
