@@ -43,7 +43,7 @@ funCheckPrometheus(){
         echo -e "\n"
 }
 
-# Check alertmanager if alert contains DeadMansSwitch
+# Check alertmanager if alert contains Watchdog
 funCheckAlertmanager(){
         echo "Alertmanager pod IP is:" ${alertmanager_ip}
         echo "output alerts"
