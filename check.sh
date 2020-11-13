@@ -12,7 +12,6 @@ funCheckPods() {
        echo "output pods under openshift-monitoring"
        oc -n $project get pod -o wide
 }
-
 # check monitoring images and check if errors in pod logs
 funCheckImageAndLog() {
 	for pod in $(oc get pod -n $project | grep -v NAME| awk '{print $1}')
@@ -24,7 +23,7 @@ funCheckImageAndLog() {
 		for container in $(oc -n $project get pods $pod -o jsonpath="{.spec.containers[*].name}")
 		do
 			echo container: $container
-			oc -n $project logs -c $container $pod  | grep -e error -e Error -e Exception -e err -e "remote error" -e Failed
+			oc -n $project logs -c $container $pod  | grep -e error -e Error -e Exception -e err -e "remote error" -e Failed -e warn
 			echo -e "\n"
 		done
 	done
@@ -44,7 +43,7 @@ funCheckPrometheus(){
         echo -e "\n"
 }
 
-# Check alertmanager if alert contains Watchdog
+# Check alertmanager if alert contains DeadMansSwitch
 funCheckAlertmanager(){
         echo "Alertmanager pod IP is:" ${alertmanager_ip}
         echo "output alerts"
@@ -52,27 +51,23 @@ funCheckAlertmanager(){
         echo -e "\n"
 }
 
-# Check targets which are down
 funCheckTargetDown(){
         echo "prometheus route is:" ${prometheus_route}
         echo "the following target is down"
         curl -k -H "Authorization: Bearer $token" https://${prometheus_route}/targets | grep -i down
 }
 
-# Check targets which have x509 error
 funCheckx509(){
         echo "prometheus route is:" ${prometheus_route}
         echo "x509 error see below"
         curl -k -H "Authorization: Bearer $token" https://${prometheus_route}/targets | grep -i x509
 }
 
-# Check targets which are context deadline exceeded
 funCheckdeadline(){
         echo "prometheus route is:" ${prometheus_route}
         echo "context deadline exceeded error see below"
         curl -k -H "Authorization: Bearer $token" https://${prometheus_route}/targets | grep -i deadline
 }
-
 funCheckPods
 funCheckImageAndLog
 funCheckAlertmanager
