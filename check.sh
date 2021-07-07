@@ -32,14 +32,14 @@ funCheckImageAndLog() {
 # Check grafana
 funCheckGrafana(){
         echo "Grafana pod IP is:" ${grafana_ip}
-	oc -n openshift-monitoring exec -c prometheus prometheus-k8s-1 -- curl -k -H "Authorization: Bearer $token" https://${grafana_ip}:3000/api/health
+	oc -n openshift-monitoring exec -c prometheus prometheus-k8s-0 -- curl -k -H "Authorization: Bearer $token" https://${grafana_ip}:3000/api/health
         echo -e "\n"
 }
 
 # Check prometheus
 funCheckPrometheus(){
         echo "Prometheus pod IP is:" ${prometheus_ip}
-	oc -n openshift-monitoring exec -c prometheus prometheus-k8s-1 -- curl -k -H "Authorization: Bearer $token" https://${prometheus_ip}:9091/metrics | grep prometheus_rule_group_interval_seconds
+	oc -n openshift-monitoring exec -c prometheus prometheus-k8s-0 -- curl -k -H "Authorization: Bearer $token" https://${prometheus_ip}:9091/metrics | grep prometheus_rule_group_interval_seconds
         echo -e "\n"
 }
 
@@ -47,7 +47,7 @@ funCheckPrometheus(){
 funCheckAlertmanager(){
         echo "Alertmanager pod IP is:" ${alertmanager_ip}
         echo "output alerts"
-	oc -n openshift-monitoring exec -c prometheus prometheus-k8s-1  -- curl -k -H "Authorization: Bearer $token" https://${alertmanager_ip}:9095/api/v1/alerts | grep Watchdog | jq
+	oc -n openshift-monitoring exec -c prometheus prometheus-k8s-0  -- curl -k -H "Authorization: Bearer $token" https://${alertmanager_ip}:9095/api/v1/alerts | grep Watchdog | jq
         echo -e "\n"
 }
 
