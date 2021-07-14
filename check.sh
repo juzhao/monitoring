@@ -23,7 +23,7 @@ funCheckImageAndLog() {
 		for container in $(oc -n $project get pods $pod -o jsonpath="{.spec.containers[*].name}")
 		do
 			echo container: $container
-			oc -n $project logs -c $container $pod  | grep -e error -e Error -e Exception -e err -e "remote error" -e Failed -e warn
+			oc -n $project logs -c $container $pod  | grep -Ei "failed|err|error|degraded|exception|warn"
 			echo -e "\n"
 		done
 	done
