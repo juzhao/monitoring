@@ -5,25 +5,23 @@ metadata:
   namespace: openshift-monitoring
 data:
   config.yaml: |
-    telemeterClient:
-      telemeterServerURL: https://infogw.api.stage.openshift.com
-      token: b3BlbnNoaWZ0LXJlbGVhc2UtZGV2K2p1emhhb3JlZGhhdGNvbTFkdTFjZWdrcGppd2J0d2o4eXZ6MWtsd3hmZzpYQkUxTTc4TDE5VEs3S1czTlY0NkNDTkVTSENJS1FVUTNPN01JVkJQV1U1NUdTMjRJQzA4RlBBUDVaM1VBQ1BB
+    enableUserWorkload: true
     prometheusK8s:
-      retention: 2d
+      retention: 24h
       volumeClaimTemplate:
         metadata:
-          name: my-prometheus
+          name: prometheus
         spec:
-          storageClassName: gp2
+          volumeMode: Filesystem
           resources:
             requests:
-              storage: 5Gi
+              storage: 10Gi
     alertmanagerMain:
       volumeClaimTemplate:
         metadata:
-          name: my-alertmanager
+          name: alertmanager
         spec:
-          storageClassName: gp2
+          volumeMode: Filesystem
           resources:
             requests:
-              storage: 2Gi
+              storage: 4Gi
